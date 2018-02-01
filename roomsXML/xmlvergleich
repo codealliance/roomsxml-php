@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+    <soap:Body>
+        <AvailabilitySearch xmlns="http://www.reservwire.com/namespace/WebServices/Xml">
+            <xiRequest>
+                <Authority>
+                    <Org>sps</Org>
+                    <User>xmltest</User>
+                    <Password>xmltest</Password>
+                    <Currency>EUR</Currency>
+                    <Language>en</Language>
+                    <Version>1.25</Version>
+                </Authority> <RegionId>18846</RegionId>
+                <HotelStayDetails>
+                    <ArrivalDate>2019-12-04</ArrivalDate>
+                    <Nights>2</Nights>
+                    <Nationality>DE</Nationality>
+                    <Room>
+                        <Guests><Adult title="Mrs." first="test0" last="test" /></Guests>
+                    </Room>
+                </HotelStayDetails>
+                <HotelSearchCriteria>
+                    <AvailabilityStatus>allocation</AvailabilityStatus>
+                    <DetailLevel>basic</DetailLevel></HotelSearchCriteria>
+            </xiRequest>
+        </AvailabilitySearch>
+    </soap:Body>
+</soap:Envelope>

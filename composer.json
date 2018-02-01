@@ -1,0 +1,14 @@
+{
+    "name": "codealliance/roomsxml-php",
+    "description": "api for roomsxml",
+    "type": "library",
+    "authors": [
+        {
+            "name": "ullika",
+            "email": "ullika@code-alliance.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+	"config": {  "vendor-dir": "_vendor"}
+}
