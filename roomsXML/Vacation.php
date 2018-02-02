@@ -13,6 +13,21 @@ class Vacation {
 	public $kids;
 	public $startdate;
 	public $enddate;
+
+	/**
+	 * @return string
+	 */
+	public function getStartdate() {
+		return $this->startdate;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEnddate() {
+		return $this->enddate;
+	}
+	public $nationality;
 	public $child_ages;
 	public $adult_names;
 	public $child_names;
@@ -20,7 +35,8 @@ class Vacation {
 	public $maxprice;
 
 
-	function __construct($rooms, $adults, $kids, $startdate, $enddate, $child_ages=array(), $adult_names=array(), $child_names=array(), $minprice=0, $maxprice=null) {
+
+	function __construct($rooms, $adults, $kids, $startdate, $enddate, $nationality, $child_ages=array(), $adult_names=array(), $child_names=array(), $minprice=0, $maxprice=null) {
 		$this->rooms = $rooms;
 		$this->adults = $adults;
 		$this->kids = $kids;
@@ -31,6 +47,7 @@ class Vacation {
 		$this->child_names=$child_names;
 		$this->minprice=$minprice;
 		$this->maxprice = $maxprice==null ? API::$no_max_price : $maxprice;
+		$this->nationality=$nationality;
 	}
 
 

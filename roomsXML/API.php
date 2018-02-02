@@ -80,32 +80,32 @@ class API {
 	 * @return null|string
 	 */
 	public function getRoomsXmlSection( $vacation ) {
-		
 		$rooms_xml = null;
 		for ( $i = 0; $i < $vacation->rooms; $i ++ ) {
 			$rooms_xml .= "<Room>
 				      <Guests>";
 
 			for ( $j = 0; $j < $vacation->adults; $j ++ ) {
-				$persons=$vacation->adult_names;
+				$adult_names=$vacation->adult_names;
 
-				if ( count( $persons ) ) {
-					$rooms_xml .= '<Adult title="' . $persons[ $j ][0] . '" first="' . $persons[ $j ][1] . '" last="' . $persons[ $j ][2] . '"></Adult>';
+				if ( $i==0 && array_key_exists( $j,$adult_names ) ) {
+					$rooms_xml .= '<Adult title="' . $adult_names[ $j ][0] . '" first="' . $adult_names[ $j ][1] . '" last="' . $adult_names[ $j ][2] . '"></Adult>';
 				} else {
-					$rooms_xml .= '<Adult title="Mrs." first="test' . $j . '" last="test" />';
+
+					$rooms_xml .= '<Adult title="Mrs." first="test' . str_repeat('R',$i).str_repeat('I',$j) . '" last="testadult" />';
 				}
 			}
 			if ( $vacation->kids ) {
 				$child_ages = $vacation->child_ages;
-				$childrendata = $vacation->child_names;
+				$child_names = $vacation->child_names;
 				$k = 0;
 
 				foreach ( $child_ages as $z => $c ) {
 
-					if ( count( $childrendata ) ) {
-						$rooms_xml .= '<Child age="' . $c . '" title="' . $childrendata[ $k ][0] . '" first="' . $childrendata[ $k ][1] . '" last="' . $childrendata[ $k ][2] . '"/>';
+					if ($i==0 && array_key_exists( $k,$child_names ) ) {
+						$rooms_xml .= '<Child age="' . $c . '" title="' . $child_names[ $k ][0] . '" first="' . $child_names[ $k ][1] . '" last="' . $child_names[ $k ][2] . '"/>';
 					} else {
-						$rooms_xml .= '<Child age="' . $c . '" title="Ms." first="test' . $z . '" last="test"/>';
+						$rooms_xml .= '<Child age="' . $c . '" title="Ms." first="test' .str_repeat('R',$i). str_repeat('I',$z) . '" last="testchild"/>';
 
 					}
 
@@ -157,7 +157,7 @@ class API {
 					  <HotelStayDetails>
 					    <ArrivalDate>' . $formatedStart . '</ArrivalDate>
 					    <Nights>' . $num_days . '</Nights>
-					    <Nationality>DE</Nationality>
+					    <Nationality>'.$vacation->nationality.'</Nationality>
 					    ' . $rooms_xml . '
 					  </HotelStayDetails>
 					  <HotelSearchCriteria>
@@ -189,7 +189,7 @@ class API {
 	 *
 	 * @return string
 	 */
-	function getBookingXML( $roomsxml, $result_id, $vacation, $dry_run = true ) {
+	function getBookingXML( $roomsxml, $result_id, $dry_run = true ) {
 
 		$mode = ( $dry_run ) ? 'prepare' : 'confirm';
 
@@ -260,6 +260,7 @@ class API {
 	}
 
 	function convertDate( $date ) {
+		//converts a date from the custom format into standart
 		$formatstring = $this->constants->input_date_format;
 		$delimiter    = strpos( $date, "/" ) !== false ? "/" : "-";
 		$x            = explode( $delimiter, $date );
@@ -272,6 +273,9 @@ class API {
 		$month = $x[ $mpos ];
 
 		$ypos = array_search( 'yyyy', $y );
+		if ($ypos==false) {
+			$ypos = array_search( 'yy', $y );
+		}
 		$year = $x[ $ypos ];
 
 		return $year . "-" . $month . "-" . $day;
@@ -342,7 +346,7 @@ class API {
 				$room_entry['NightCost'] = array( '0' => $room_entry['NightCost'] );
 
 			}
-			if ( array_key_exists('Type',$room_entry['Messages']['Message']) ) {
+			if ( array_key_exists('Message',$room_entry['Messages']) && array_key_exists('Type',$room_entry['Messages']['Message']) ) {
 				$room_entry['Messages']['Message'] = array( '0' => $room_entry['Messages']['Message'] );
 			}
 			if ( array_key_exists('Amount',$room_entry['CanxFees']['Fee'])) {

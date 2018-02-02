@@ -1,0 +1,6 @@
+2018-02-01
+
+- vacation object includes nationality, this will be used in the availability search.
+- if no (or not enough) guest names are set, generate unique guest names
+- getter for RoomType, MealType and AdditionalInformation
+- some changes in variable naming

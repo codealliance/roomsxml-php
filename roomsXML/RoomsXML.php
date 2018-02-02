@@ -70,6 +70,7 @@ class RoomsXML {
 	}
 
 	function availability_search_hotel($hotel_id, $vacation, $return_type) {
+
 		$xml=$this->api->getRoomsXmlSection($vacation);
 		$request=$this->api->getRequestXml($xml, $hotel_id, $vacation, true);
 		$pair = RequestResponsePairAvail::create_pair_from_request( $request, $this->api );
@@ -80,10 +81,16 @@ class RoomsXML {
 		}
 	}
 
+	/* @param $vacation Vacation
+	 * @param $region_id int
+
+	 */
 	function availability_search_region($region_id, $vacation, $return_type) {
+
 		$xml=$this->api->getRoomsXmlSection($vacation);
+
 		$request=$this->api->getRequestXml($xml, $region_id, $vacation, false);
-		$pair = RequestResponsePairAvail::create_pair_from_request( $request, $this->api );
+		$pair = RequestResponsePairAvail::create_pair_from_request( $request, $this->api);
 		if ($return_type==RoomsXML::$return_type_array) {
 			return $pair->get_roomsdata();
 		} else {
@@ -94,7 +101,7 @@ class RoomsXML {
 
 	function booking_prepare($quote_id, $vacation, $return_type) {
 		$xml=$this->api->getRoomsXmlSection($vacation);
-		$request=$this->api->getBookingXML($xml, $quote_id, $vacation, true);
+		$request=$this->api->getBookingXML($xml, $quote_id, true);
 		$pair = RequestResponsePairBookingCreate::create_pair_from_request( $request, $this->api );
 		if ($return_type=='Array') {
 			return $pair->get_roomsdata();
@@ -105,7 +112,7 @@ class RoomsXML {
 
 	function booking_confirm($quote_id, $vacation, $return_type) {
 		$xml=$this->api->getRoomsXmlSection($vacation);
-		$request=$this->api->getBookingXML($xml, $quote_id, $vacation, false);
+		$request=$this->api->getBookingXML($xml, $quote_id, false);
 		$pair = RequestResponsePairBookingCreate::create_pair_from_request( $request, $this->api );
 		if ($return_type=='Array') {
 			return $pair->get_roomsdata();
@@ -116,7 +123,7 @@ class RoomsXML {
 
 	function booking_cancel($booking_id) {
 		$request = $this->api->getBookingXmlCancel($booking_id );
-		$pair = new RequestResponsePairBookingCancel( $request, $this->api );
+		$pair = RequestResponsePairBookingCancel::create_pair_from_request( $request, $this->api );
 		return $pair;
 
 	}

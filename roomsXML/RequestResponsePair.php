@@ -19,7 +19,8 @@ abstract class RequestResponsePair {
 		return $this->response;
 	}
 
-	public function has_as_request($new_request) {
+
+	public function has_as_request( $new_request ) {
 
 
 		if ( $this->request == $new_request ) {
@@ -29,8 +30,6 @@ abstract class RequestResponsePair {
 		return false;
 
 	}
-
-
 
 
 }

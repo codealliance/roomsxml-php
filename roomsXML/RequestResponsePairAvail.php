@@ -12,7 +12,7 @@ class RequestResponsePairAvail extends RequestResponsePair {
 
 	private $result_ids;
 	private $acc_ids;
-	public $roomsdata;
+	private $roomsdata;
 
 	/**
 	 * @return mixed

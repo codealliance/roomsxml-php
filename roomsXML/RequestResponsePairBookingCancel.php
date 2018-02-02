@@ -2,40 +2,23 @@
 /**
  * Created by PhpStorm.
  * User: ullika
- * Date: 15/09/17
- * Time: 14:43
+ * Date: 05/12/17
+ * Time: 16:10
  */
 
 class RequestResponsePairBookingCancel extends RequestResponsePair {
-	public $request;
-	public $response;
-
-
-	public function get_request() {
-		return $this->request;
-	}
-
-	public function get_response() {
-		return $this->response;
-	}
-
-
-
-
-	/**
-	 * RequestResponsePairBookingCancel constructor.
-	 *
-	 * @param $request string
-	 * @param $constants Constants
-	 * @param $api API
-	 */
-	function __construct($request, $api) {
-		$constants = $api->constants;
-		$this->response = $api->sendCurlRequest( $request, $constants->soap_action_bookcancel );
+	/* @param $request string
+	 * @param $api API */
+	function __construct($request,$api) {
+		$response = $api->sendCurlRequest( $request, $api->constants->soap_action_bookcancel );
 		$this->request = $request;
-
+		$this->response = $response;
 	}
 
+	public static function create_pair_from_request($request, $api) {
+		$pair = new RequestResponsePairBookingCancel( $request, $api );
 
 
+		return $pair;
+	}
 }
